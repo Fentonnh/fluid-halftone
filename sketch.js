@@ -1,6 +1,16 @@
 let theShader;
 let speedSlider, scaleSlider, color1Picker, color2Picker;
 
+function calcCanvasSize() {
+  let h = windowHeight - 80; // leave space for toolbar
+  let w = h * 9 / 16;
+  if (w > windowWidth) {
+    w = windowWidth - 40;
+    h = w * 16 / 9;
+  }
+  return { w, h };
+}
+
 function preload() {
   // Load your vertex & fragment shaders
   theShader = loadShader(
@@ -10,15 +20,18 @@ function preload() {
 }
 
 function setup() {
-  // Create a full-window WebGL canvas
-  createCanvas(windowWidth, windowHeight, WEBGL);
+  const { w, h } = calcCanvasSize();
+  createCanvas(w, h, WEBGL).parent('canvas-container');
   noStroke();
 
-  // UI: tweak speed, texture scale, and endpoint colors
-  speedSlider  = createSlider(0.1, 5, 1, 0.1).position(10, 10);
-  scaleSlider  = createSlider(1, 50, 10, 1).position(10, 40);
-  color1Picker = createColorPicker('#000000').position(10, 70);
-  color2Picker = createColorPicker('#ffffff').position(10, 100);
+  speedSlider  = createSlider(0.1, 5, 1, 0.1).parent('speedContainer');
+  speedSlider.id('speedSlider');
+  scaleSlider  = createSlider(1, 50, 10, 1).parent('scaleContainer');
+  scaleSlider.id('scaleSlider');
+  color1Picker = createColorPicker('#000000').parent('color1Container');
+  color1Picker.id('color1Picker');
+  color2Picker = createColorPicker('#ffffff').parent('color2Container');
+  color2Picker.id('color2Picker');
 }
 
 function draw() {
@@ -42,6 +55,6 @@ function draw() {
 }
 
 function windowResized() {
-  // Keep canvas responsive
-  resizeCanvas(windowWidth, windowHeight);
+  const { w, h } = calcCanvasSize();
+  resizeCanvas(w, h);
 }
