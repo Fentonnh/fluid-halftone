@@ -51,7 +51,7 @@ function draw() {
   theShader.setUniform('u_color2', [red(c2)/255, green(c2)/255, blue(c2)/255]);
 
   // Draw a rectangle covering the viewport
-  rect(-width/4, -height/4, width, height);
+  rect(-width/2, -height/2, width, height);
 }
 
 function windowResized() {
