@@ -10,7 +10,8 @@ uniform vec3  u_color2;
 uniform vec2  resolution;
 
 // ————————————————————————
-// Simplex noise by Ashima (copy in full from earlier)
+// 2D Simplex noise (Ashima)
+// Copy the full snoise(vec2) implementation here
 // ————————————————————————
 vec3 mod289(vec3 x){return x - floor(x*(1.0/289.0))*289.0;}
 vec2 mod289(vec2 x){return x - floor(x*(1.0/289.0))*289.0;}
@@ -39,10 +40,9 @@ float snoise(vec2 v){
 }
 
 // ————————————————————————
-// 4×4 Bayer threshold via if/else (no arrays)
+// Bayer dithering via if/else
 // ————————————————————————
 float getBayer(vec2 fragCoord) {
-  // fragCoord mod 4
   float fx = floor(fract(fragCoord.x * 0.25) * 4.0);
   float fy = floor(fract(fragCoord.y * 0.25) * 4.0);
 
@@ -70,7 +70,7 @@ float getBayer(vec2 fragCoord) {
 }
 
 void main() {
-  // 1) Normalize coords
+  // 1) Normalize pixel coords
   vec2 uv = gl_FragCoord.xy / resolution;
 
   // 2) Time warp
@@ -81,7 +81,7 @@ void main() {
   float nx = snoise(p + vec2( t, -t));
   float ny = snoise(p + vec2(-t,  t));
   vec2 curl = vec2(ny, -nx);
-  uv += curl * 0.1;         // swirl intensity
+  uv += curl * 0.1;  // swirl intensity
 
   // 4) Sample brightness
   float lum = snoise(uv * u_noiseScale + t);
@@ -94,5 +94,6 @@ void main() {
 
   // 7) Mix colors
   vec3 color = mix(u_color1, u_color2, dotVal);
+
   gl_FragColor = vec4(color, 1.0);
 }
