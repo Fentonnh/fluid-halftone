@@ -5,28 +5,57 @@
   <title>Fluid Halftone Shader</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- 1) p5 core -->
+  <!-- p5 core + sound (optional) -->
   <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script>
-  <!-- 2) p5.sound (optional) -->
   <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/addons/p5.sound.min.js"></script>
-  <!-- 3) your sketch logic -->
-  <script src="sketch.js"></script>
 
   <style>
-    html, body { margin: 0; padding: 0; overflow: hidden; }
-    canvas { display: block; }
-    /* Simple toolbar styling */
-    #toolbar { position: absolute; top: 10px; left: 10px; z-index: 10; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 4px; }
-    #toolbar > div { margin-bottom: 8px; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* 1) Fixed toolbar at top */
+    #toolbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 80px;                 /* ← adjust if you change JS toolbarHeight */
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      background: rgba(255,255,255,0.9);
+      z-index: 10;
+    }
+
+    /* 2) Canvas container fills remaining space & centers its child */
+    #canvas-container {
+      position: absolute;
+      top: 80px;                    /* ← same as toolbar height */
+      left: 0; right: 0; bottom: 0;
+      display: flex;
+      justify-content: center;      /* horizontal center */
+      align-items: center;          /* vertical center */
+    }
+
+    /* 3) Stretch the p5 canvas to fill that container */
+    #canvas-container canvas {
+      width: 100%  !important;
+      height: 100% !important;
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
-  <div id="toolbar">
-    <div id="speedContainer">Speed</div>
-    <div id="scaleContainer">Texture</div>
-    <div id="color1Container">Color 1</div>
-    <div id="color2Container">Color 2</div>
-  </div>
+
+  <!-- Empty div where we’ll position sliders/color-pickers -->
+  <div id="toolbar"></div>
+
+  <!-- Our WebGL canvas will be injected here -->
   <div id="canvas-container"></div>
+
+  <!-- Your sketch logic -->
+  <script src="sketch.js"></script>
 </body>
 </html>
