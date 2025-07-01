@@ -4,36 +4,29 @@
   <meta charset="UTF-8">
   <title>Fluid Halftone Shader</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 1) p5 core -->
   <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script>
+  <!-- 2) p5.sound (optional) -->
   <script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/addons/p5.sound.min.js"></script>
+  <!-- 3) your sketch logic -->
+  <script src="sketch.js"></script>
+
   <style>
-    html, body { margin: 0; padding: 0; height: 100%; font-family: sans-serif; }
-    #toolbar {
-      display: flex;
-      gap: 12px;
-      padding: 10px;
-      align-items: center;
-      background: #f4f4f4;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    #toolbar label { margin-right: 4px; font-size: 14px; }
-    #canvas-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: calc(100vh - 60px);
-    }
-    canvas { border: 1px solid #ccc; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+    html, body { margin: 0; padding: 0; overflow: hidden; }
+    canvas { display: block; }
+    /* Simple toolbar styling */
+    #toolbar { position: absolute; top: 10px; left: 10px; z-index: 10; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 4px; }
+    #toolbar > div { margin-bottom: 8px; }
   </style>
 </head>
 <body>
   <div id="toolbar">
-    <div class="control" id="speedContainer"><label for="speedSlider">Speed</label></div>
-    <div class="control" id="scaleContainer"><label for="scaleSlider">Texture</label></div>
-    <div class="control" id="color1Container"><label for="color1Picker">Color 1</label></div>
-    <div class="control" id="color2Container"><label for="color2Picker">Color 2</label></div>
+    <div id="speedContainer">Speed</div>
+    <div id="scaleContainer">Texture</div>
+    <div id="color1Container">Color 1</div>
+    <div id="color2Container">Color 2</div>
   </div>
   <div id="canvas-container"></div>
-  <script src="sketch.js"></script>
 </body>
 </html>
